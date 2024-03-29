@@ -35,7 +35,12 @@ ThisBuild / githubWorkflowPublish := Seq(
   )
 )
 
-(publish / skip) := true
+lazy val root = project
+  .in(file("."))
+  .settings(
+    publish / skip := true
+  )
+  .aggregate(rules, input, output, tests)
 
 lazy val rules = project.settings(
   moduleName                             := "fixins",
