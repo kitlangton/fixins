@@ -1,3 +1,5 @@
+import scala.collection.immutable.Seq
+
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 inThisBuild(
@@ -13,6 +15,23 @@ inThisBuild(
     semanticdbIncludeInJar := true,
     semanticdbVersion      := scalafixSemanticdb.revision,
     scalacOptions ++= List("-Yrangepos")
+  )
+)
+
+ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
+ThisBuild / githubWorkflowPublishTargetBranches :=
+  Seq(RefPredicate.StartsWith(Ref.Tag("v")))
+
+ThisBuild / githubWorkflowPublish := Seq(
+  WorkflowStep.Sbt(
+    commands = List("ci-release"),
+    name = Some("Publish project"),
+    env = Map(
+      "PGP_PASSPHRASE"    -> "${{ secrets.PGP_PASSPHRASE }}",
+      "PGP_SECRET"        -> "${{ secrets.PGP_SECRET }}",
+      "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
+      "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+    )
   )
 )
 
