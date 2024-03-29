@@ -1,0 +1,8 @@
+.bsp
+.idea
+input/target
+output/target
+project/project/target/config-classes
+project/target
+rules/target
+target
