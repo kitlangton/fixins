@@ -11,6 +11,7 @@ inThisBuild(
       Developer("kitlangton", "Kit Langton", "kit.langton@gmail.com", url("https://github.com/kitlangton"))
     ),
     scalaVersion           := V.scala213,
+    crossScalaVersions     := Seq(V.scala212, V.scala213),
     semanticdbEnabled      := true,
     semanticdbIncludeInJar := true,
     semanticdbVersion      := scalafixSemanticdb.revision,
